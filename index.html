@@ -4,16 +4,36 @@
     <title>Alec Williams</title>
       <script>
           function playFun(){
-              var music = new Audio('sfx/fun.mp3');
+              var music = new Audio('site/sfx/fun.mp3');
               music.play();
           }
       </script>
+      <link rel="stylesheet" href="site/style/index.css">
   </head>
   <body>
-    <h1>Oh, hello.</h1>
-    <h2>didn't see you there...</h2>
-    <a href="/rogue.html">Check out my game</a>
-      <br>
-      <font size='40px' color='red'>--></font><button onClick='playFun()'>...</button><font size='40px' color='red'>&lt;--</font>
+    <div id="body_container">
+      <div id="title">
+        <h1>Oh, hello.</h1>
+      </div>
+      <div id="subtitle">
+        <h2>didn't see you there...</h2>
+      </div>
+      <div id="gamelinks">
+        <a href="rogue.html">Check out my game</a>
+      </div>
+      <div id="funbutton_container">
+        <font size='40px' color='red'>--></font><button onClick='playFun()'>...</button><font size='40px' color='red'>&lt;--</font>
+      </div>
+      <div id="swordsmen">
+        <h3>Hall of Steel</h3>
+        <div id="swordsmen_container">
+          <img src="site/img/sm1.jpg">
+          <img src="site/img/sm2.jpg">
+          <img src="site/img/sm3.jpg">
+          <img src="site/img/sm4.jpg">
+          <img src="site/img/sm5.webp">
+        </div>
+      </div>
+    </div>
   </body>
 </html>
