@@ -19,9 +19,28 @@ h2 {
   font-size: 3em;
 }
 
+#title, #subtitle, #gamelinks, #funbutton {
+  background-image: linear-gradient(white, rgb(191, 191, 191));
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#subtitle {
+  background-image: linear-gradient(rgb(191, 191, 191), rgb(127, 127, 127));
+}
+
+#gamelinks {
+  background-image: linear-gradient(rgb(127, 127, 127), rgb(64, 64, 64));
+}
+
+#funbutton {
+  background-image: linear-gradient(rgb(64, 64, 64), black);
+}
+
 #body_container div {
   flex: 1 1 0px;
-  margin: 20px;
+  padding: 20px;
 }
 
 img {
