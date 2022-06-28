@@ -1,63 +1,62 @@
 import { Display, FOV } from "../lib/index.js";
-import { TileTypes } from "./util.js";
+import { TileTypes, Point } from "./util.js";
 
 class GameDisplay {
   constructor(game) {
     this.game = game;
+    this.oldTiles = []
   }
   
   init() {
-    let o = this.game.screenDim
-    let d = new Display(o);
+    let o = this.game.screenDim //get screen dimensions
+    let d = new Display(o);     //initialize display, attach it to the doc
     this.d = d
     document.body.appendChild(d.getContainer());
 
-    //this.game.map.create(d.DEBUG)
-    /*let data = this.game.terrainData
-    for (let i = 0; i < this.game.screenDim.width; i++) {
-      for (let j = 0; j < this.game.screenDim.height; j++) {
-        if (data[i+","+j])
-          this.d.draw(i, j, "#")
-        else 
-          this.d.draw(i,j,".")
-      }
-    }*/
-
+    //initialize FOV
     this.fov = new FOV.PreciseShadowcasting((x,y) => {
       return this.game.getTileContents(x, y) == TileTypes.Floor
     });
 
+    //draw the starting screen
     this.redraw()
   }
   
   redraw() {
-    this.drawFov()
-    this.drawEntities()
+    this.drawFov()      //redraw terrain in player's FOV
+    this.drawEntities() //redraw entities within player's view
   }
 
   drawFov() {
-    //let data = this.game.terrainData
     let p = this.game.player
+    let visibleTiles = []     //list of currently visible tiles
+                              //used to compare against list of previously visible tiles
 
+    //draw terrain in FOV
     this.fov.compute(p.x, p.y, p.r, (x, y, r, visibility) => {
       this.d.draw(x, y, this.game.getTileChar(x, y), "#fff");
+      visibleTiles.push(new Point(x,y))
     });
 
-    //this.d.draw(this.game.player.oldX, this.game.player.oldY, ".");
-    //this.d.draw(this.game.player.x, this.game.player.y, "@", "goldenrod");
+    //redraw terrain that is no longer visible as grey
+    for (var i=0; i < this.oldTiles.length; i++) {
+      let ot = this.oldTiles[i]
+      if (!visibleTiles.some((newTile) => {
+        return ot.x == newTile.x && ot.y == newTile.y
+      })) {
+        console.log("drawing old tile @ "+ot.x+","+ot.y)
+        this.d.draw(ot.x, ot.y, this.game.getTileChar(ot.x, ot  .y), "#aaa");
+      }
+    }
+    this.oldTiles = visibleTiles
   }
 
   drawEntities() {
     var entities = this.game.getEntitiesNearPlayer()
-    /*console.log(entities)
-    for (var e in entities) {
-      console.log(e.x +"," + e.y)
-      this.d.draw(e.x, e.y, e.symbol, e.color)
-    }*/
+
     for (var i = 0; i < entities.length; i++) {
       this.d.draw(entities[i].x, entities[i].y, entities[i].symbol, entities[i].color)
     }
-      
   }
 }
 

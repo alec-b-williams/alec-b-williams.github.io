@@ -11,3 +11,10 @@ export function distance(e1, e2) {
   y = y*y
   return Math.sqrt(x+y)
 }
+
+export class Point {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+  }
+}
