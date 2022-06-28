@@ -1,5 +1,5 @@
 import { Display, FOV } from "../lib/index.js";
-import { TileTypes } from "./types.js";
+import { TileTypes } from "./util.js";
 
 class GameDisplay {
   constructor(game) {
@@ -48,7 +48,16 @@ class GameDisplay {
   }
 
   drawEntities() {
-    
+    var entities = this.game.getEntitiesNearPlayer()
+    /*console.log(entities)
+    for (var e in entities) {
+      console.log(e.x +"," + e.y)
+      this.d.draw(e.x, e.y, e.symbol, e.color)
+    }*/
+    for (var i = 0; i < entities.length; i++) {
+      this.d.draw(entities[i].x, entities[i].y, entities[i].symbol, entities[i].color)
+    }
+      
   }
 }
 

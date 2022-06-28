@@ -1,8 +1,7 @@
 import GameDisplay from "./display.js";
 import Player from "./player.js";
 import { Map } from "../lib/index.js";
-import {TileTypes as TT} from "./types.js";
-import {distance} from "./util.js"
+import { TileTypes as TT, distance } from "./util.js"
 
 class Game {
   constructor() {
@@ -54,13 +53,13 @@ class Game {
     return this.terrainData[x+","+y]
   }
 
-  getEntitiesNearPlayer(x,y) {
+  getEntitiesNearPlayer() {
     let entities = []
-    for (e in this.entityData) {
-      if distance(player, e) <= 10
-        entities.append(e)
+    for (let e in this.entityData) {
+      if (distance(this.player, e) <= 10)
+        entities.push(e)
     }
-
+    entities.push(this.player)
     return entities
   }
 }

@@ -1,5 +1,5 @@
 import Game from "./game.js";
-import { TileTypes } from "./types.js";
+import { TileTypes } from "./util.js";
 
 class Player {
   constructor(x, y, game) {
@@ -11,6 +11,7 @@ class Player {
     this.health = 10;
     this.r = 10;  //FoV distance
     this.symbol = '@'
+    this.color = "goldenrod"
   }
 
   move(key) {
