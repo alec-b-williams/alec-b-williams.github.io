@@ -1,7 +1,7 @@
 import GameDisplay from "./display.js";
 import Player from "./player.js";
 import { Map } from "../lib/index.js";
-import {TileTypes} from "./types.js";
+import { TileTypes as TT, distance } from "./util.js"
 
 class Game {
   constructor() {
@@ -12,12 +12,16 @@ class Game {
     this.gd = new GameDisplay(this);
     this.player = new Player(40, 20, this);
     this.map = new Map.Digger(this.screenDim.width, this.screenDim.height);
-    let mapData = []
+    let terrainData = []
     this.map.create(function(x, y, wall) {
-      mapData[x+","+y] = (wall ? 1 : 0)
+      terrainData[x+","+y] = (wall ? 1 : 0)
     })
 
-    this.mapData = mapData;
+    let entityData = []
+    entityData[this.player.x+","+this.player.y] = this.player
+    this.entityData = entityData
+
+    this.terrainData = terrainData;
     this.gd.init();
 
     window.addEventListener("keydown", (e) => {
@@ -31,12 +35,32 @@ class Game {
     if (k >= 37 && k <= 40) {
       console.log("moving player w/ code " + k)
       this.player.move(k)
-      this.gd.redrawEntities()
+      this.gd.redraw()
+    }
+  }
+
+  getTileChar(x, y) {
+    let tile = this.getTileContents(x, y)
+    switch (tile) {
+      case (TT.Wall):
+        return '#';
+      case (TT.Floor):
+        return '.'
     }
   }
 
   getTileContents(x, y) {
-    return this.mapData[x+","+y]
+    return this.terrainData[x+","+y]
+  }
+
+  getEntitiesNearPlayer() {
+    let entities = []
+    for (let e in this.entityData) {
+      if (distance(this.player, e) <= 10)
+        entities.push(e)
+    }
+    entities.push(this.player)
+    return entities
   }
 }
 
