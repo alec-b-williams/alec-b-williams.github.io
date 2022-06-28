@@ -1,14 +1,17 @@
 import Game from "./game.js";
-import { TileTypes } from "./types.js";
+import { TileTypes } from "./util.js";
 
 class Player {
   constructor(x, y, game) {
     this.game = game
     this.x = x;
     this.y = y;
-    this.oldX = x;
-    this.oldY = y;
+    //this.oldX = x;  //previous player location, used for drawing
+    //this.oldY = y;
     this.health = 10;
+    this.r = 10;  //FoV distance
+    this.symbol = '@'
+    this.color = "goldenrod"
   }
 
   move(key) {
@@ -31,8 +34,8 @@ class Player {
     }
 
     if (this.game.getTileContents(newX, newY) != TileTypes.Wall) {
-      this.oldX = this.x;
-      this.oldY = this.y;
+      //this.oldX = this.x;
+      //this.oldY = this.y;
       this.x = newX;
       this.y = newY;
     }
