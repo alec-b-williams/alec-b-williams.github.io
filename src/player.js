@@ -9,7 +9,7 @@ class Player {
     //this.oldX = x;  //previous player location, used for drawing
     //this.oldY = y;
     this.health = 10;
-    this.r = 10;  //FoV distance
+    this.r = 7  //FoV distance
     this.symbol = '@'
     this.color = "goldenrod"
   }
