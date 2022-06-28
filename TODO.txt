@@ -1,0 +1,5 @@
+- fog of war
+- items, inventory
+- enemies
+- combat
+- multiple floors, stairs
